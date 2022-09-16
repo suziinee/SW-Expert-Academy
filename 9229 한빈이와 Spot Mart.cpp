@@ -10,16 +10,17 @@ int ans;
 vector<int> cookie;
 
 
-void dfs(int n, int s, int sum)
+void two_pointers(int st)
 {
-	if (sum > M) return;
-	if (n == 2) {
-		if (sum <= M && ans < sum) ans = sum;
-		return;
-	}
+	int sum;
 
-	for (int i = s; i < N; i++) {
-		dfs(n + 1, i + 1, sum + cookie[i]);
+	for (int s = st; s < N; s++) {
+		int e = s + 1;
+		while (e < N) {
+			sum = cookie[s] + cookie[e];
+			if (sum <= M && ans < sum) ans = sum;
+			e++;
+		}
 	}
 }
 
@@ -44,7 +45,7 @@ void input()
 		for (i = 0; i < N; i++) {
 			if (cookie[i] < M) break;
 		}
-		dfs(0, i, 0);
+		if (i < N - 1) two_pointers(i);
 		cout << "#" << t + 1 << " " << ans << "\n";
 	}
 }
